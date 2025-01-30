@@ -1,54 +1,41 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import MovieController from "../Controllers/MovieController"
 import MovieItem from "./MovieItem";
 
-class MovieList extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            movies: [],
-            loading: true,
-            error: null,
-        }
-    }
+export default function MovieList({ movies, setMovies }) {
+    const [loading, setLoading] = useState('');
+    const [error, setError] = useState('');
 
-    componentDidMount() {
-        this.fetchMovies();
-    }
 
-    fetchMovies = async () => {
+    const fetchMovies = async () => {
         try {
-            const movies = await MovieController.getMovies();
-            console.log(movies);
-            this.setState({ movies, loading: false })
+            const movies = await MovieController.getPage(1);
+            setMovies(movies);
+            setLoading(true);
+            setLoading(false);
         } catch (error) {
             console.log(error);
-            this.setState({ error, loading: false, })
+            setError(error);
+            setLoading(false);
         }
     }
 
+    useEffect(() => {
+        fetchMovies();
+    }, []);
 
-    render() {
-        const { movies, loading, error } = this.state;
+    if (loading) {
+        return <h1>Loading...</h1>
+    }
 
-        if (loading) {
-            return <h1>Loading...</h1>
-        }
-
-        if (error) {
-            return <h1>Something went wrong</h1>
-        }
-        return (
+    if (error) {
+        return <h1>Something went wrong</h1>
+    }
+    return (
+        (
             <div id="movies-wrapper">
-                {movies.map(movie => {
-                    return <MovieItem key={movie.id} movie={movie} />
-                    })}
+                {movies.map(movie => { return <MovieItem key={movie.id} movie={movie} /> })}
             </div>
         )
-
-
-    }
-
+    )
 }
-
-export default MovieList;

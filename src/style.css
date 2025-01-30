@@ -4,14 +4,16 @@ body {
     box-sizing: border-box;
     font-family: Arial, sans-serif;
     background: #121212;
+    user-select: none;
 }
-
-/* main Content */
 #movies-wrapper {
     display: flex;
     flex-wrap: wrap;
 }
-
+h1{
+    color: white;
+    text-align: center;
+}
 .card {
     margin: 20px;
     position: relative;
@@ -23,7 +25,6 @@ body {
     color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
-
 .overview {
     width: 90%;
     color: gray;
@@ -31,22 +32,24 @@ body {
     transition: opacity 0.3s ease;
     opacity: 0;
     max-height: 0;
-    overflow: hidden;
+    overflow: auto; 
+    scrollbar-width: none; /* For Firefox: hides scrollbar */
+    -ms-overflow-style: none; /* For IE and Edge: hides scrollbar */
 }
-
+.overview::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Edge Hides scrollbar */
+}
 .card:hover .overview {
     display: block;
     opacity: 1;
     max-height: 100%;
 }
-
 .card-background img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(50%);
+    filter: brightness(100%);
 }
-
 .card-content {
     position: absolute;
     top: 0;
@@ -59,40 +62,33 @@ body {
     justify-content: flex-end;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
 }
-
 .title {
     font-size: 1.5rem;
     font-weight: bold;
-    margin: 0 0 8px;
+    margin: 8px 1px;
 }
-
 .rating {
     font-size: 1.2rem;
     color: gold;
     margin-bottom: 8px;
 }
-
 .rating .half-star {
     color: rgba(255, 215, 0, 0.6);
 }
-
 .details {
     font-size: 0.9rem;
     margin: 0 0 12px;
 }
-
 .details .genre {
     color: #999;
     font-size: 0.85rem;
     margin-left: 8px;
 }
-
 .buttons {
     display: flex;
     gap: 8px;
     margin-bottom: 20px;
 }
-
 .add-btn,
 .info-btn {
     border: none;
@@ -102,21 +98,17 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
 .add-btn {
     background-color: #333;
     color: #fff;
 }
-
 .info-btn {
     background-color: #f9a825;
     color: #000;
 }
-
 .add-btn:hover {
     background-color: #444;
 }
-
 .info-btn:hover {
     background-color: #ffc107;
 }
@@ -130,35 +122,29 @@ body {
     padding: 10px 20px;
     color: white;
 }
-
 .nav-tabs {
     display: flex;
     gap: 40px;
 }
-
 .tab {
     cursor: pointer;
     font-size: 1.5rem;
     color: white;
     transition: all 0.3s ease;
 }
-
 .tab.active {
     color: #ffd700;
     border-bottom: 2px solid #ffd700;
 }
-
 .tab:hover {
     color: #ffd700;
 }
-
 .search-section {
     position: relative;
     display: flex;
     align-items: center;
     gap: 10px;
 }
-
 .search-input {
     background-color: #333;
     color: white;
@@ -166,12 +152,9 @@ body {
     border-radius: 4px;
     padding: 10px 30px;
 }
-
 .search-input::placeholder {
     color: #aaa;
 }
-
-
 .fa-filter {
     font-size: 16px;
     position: absolute;
@@ -184,4 +167,55 @@ body {
     left: 10px;
     color: #999;
 }
-/* Side Bar */
+/* Wrapper for pagination */
+.paginate-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    list-style-type: none;
+    padding: 0;
+}
+/* Style for individual page links */
+.paginate-wrapper li {
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  overflow: hidden;
+}
+/* Default styling for page buttons */
+.paginate-wrapper li a {
+  display: inline-block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: black;
+  background-color: #f9a825;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+/* Active page styling */
+.paginate-wrapper .selected a {
+  color: #fff;
+  background-color: black;
+  border-color: black;
+}
+/* Hover effect on buttons */
+.paginate-wrapper li a:hover {
+  background-color: black;
+  color: white;
+}
+/* Disabled buttons (previous/next when disabled) */
+.paginate-wrapper .disabled a {
+  color: #6c757d;
+  background-color: #f9a825;
+  border-color: #ddd;
+  cursor: not-allowed;
+}
+/* Ellipsis ("...") styling */
+.paginate-wrapper .break a {
+  color: #6c757d;
+  cursor: default;
+  background-color: transparent;
+  border: none;
+}
